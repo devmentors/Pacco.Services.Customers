@@ -12,7 +12,7 @@
     <PackageReference Include="Convey.CQRS.Events" Version="0.0.1-preview" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.0.1-preview" />
     <PackageReference Include="Convey.WebApi" Version="0.0.1-preview" />
-    <PackageReference Include="Convey.WebApi.CQRS" Version="0.0.1-preview" />
+    <PackageReference Include="Convey.WebApi.CQRS" Version="0.0.2-preview" />
   </ItemGroup>
 
 </Project>
