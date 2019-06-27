@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Convey" Version="0.0.*" />
+      <PackageReference Include="Convey.CQRS.Queries" Version="0.0.*" />
+      <PackageReference Include="Convey.Logging" Version="0.0.*" />
+      <PackageReference Include="Convey.Persistence.MongoDB" Version="0.0.*" />
+      <PackageReference Include="Convey.MessageBrokers" Version="0.0.*" />
+      <PackageReference Include="Convey.MessageBrokers.CQRS" Version="0.0.*" />
+      <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.0.*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pacco.Services.Customers.Application\Pacco.Services.Customers.Application.csproj" />
+    </ItemGroup>
+
+</Project>
