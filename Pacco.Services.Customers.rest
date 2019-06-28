@@ -1,0 +1,17 @@
+@url = http://localhost:5003
+@id = b5268d75-71ac-4907-98d3-d6f697826c69
+
+###
+GET {{url}}/customers
+
+###
+GET {{url}}/customers/{{id}}
+
+###
+POST {{url}}/customers
+
+{
+  "id": "{{id}}",
+  "fullname": "John Doe",
+  "address": "New York City, Street XYZ"
+}

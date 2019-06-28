@@ -13,7 +13,7 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
         {
             _customerRepository = customerRepository;
         }
-        
+
         public async Task HandleAsync(CreateCustomer command)
         {
             var customer = await _customerRepository.GetAsync(command.Id);
@@ -21,8 +21,13 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
             {
                 throw new CustomerNotFoundException(command.Id);
             }
-            
-            customer.CompleteRegistration(command.FullName, command. Address);
+
+            if (customer.RegistrationCompleted)
+            {
+                return;
+            }
+
+            customer.CompleteRegistration(command.FullName, command.Address);
             await _customerRepository.UpdateAsync(customer);
         }
     }
