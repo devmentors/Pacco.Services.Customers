@@ -1,6 +1,9 @@
 using System;
 using Convey;
 using Convey.CQRS.Queries;
+using Convey.Discovery.Consul;
+using Convey.HTTP;
+using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Persistence.MongoDB;
@@ -30,6 +33,9 @@ namespace Pacco.Services.Customers.Infrastructure
             return builder
                 .AddQueryHandlers()
                 .AddInMemoryQueryDispatcher()
+                .AddHttpClient()
+                .AddConsul()
+                .AddFabio()
                 .AddRabbitMq()
                 .AddMongo()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers");

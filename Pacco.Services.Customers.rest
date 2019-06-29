@@ -1,17 +1,17 @@
 @url = http://localhost:5003
-@id = b5268d75-71ac-4907-98d3-d6f697826c69
+@customerId = 2e7cde28-7a4f-44ba-b86e-9107bbde8942
 
 ###
 GET {{url}}/customers
 
 ###
-GET {{url}}/customers/{{id}}
+GET {{url}}/customers/{{customerId}}
 
 ###
 POST {{url}}/customers
 
 {
-  "id": "{{id}}",
+  "id": "{{customerId}}",
   "fullname": "John Doe",
   "address": "New York City, Street XYZ"
 }

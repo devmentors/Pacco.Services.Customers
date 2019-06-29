@@ -9,11 +9,13 @@ namespace Pacco.Services.Customers.Application.Events.External
     {
         public Guid Id { get; }
         public string Email { get; }
-
-        public SignedUp(Guid id, string email)
+        public string Role { get; }
+        
+        public SignedUp(Guid id, string email, string role)
         {
             Id = id;
             Email = email;
+            Role = role;
         }
     }
 }

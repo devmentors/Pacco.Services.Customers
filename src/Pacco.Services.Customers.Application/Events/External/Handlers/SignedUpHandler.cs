@@ -19,6 +19,11 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
 
         public async Task HandleAsync(SignedUp @event)
         {
+            if (@event.Role != "user")
+            {
+                return;
+            }
+            
             var customer = await _customerRepository.GetAsync(@event.Id);
             if (!(customer is null))
             {
