@@ -7,8 +7,11 @@ using Convey.LoadBalancing.Fabio;
 using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Persistence.MongoDB;
+using Convey.WebApi;
+using Convey.WebApi.CQRS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Pacco.Services.Customers.Application;
 using Pacco.Services.Customers.Application.Commands;
 using Pacco.Services.Customers.Application.Events.External;
 using Pacco.Services.Customers.Application.Services;
@@ -43,7 +46,10 @@ namespace Pacco.Services.Customers.Infrastructure
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
-            app.UseInitializers()
+            app.UseErrorHandler()
+                .UsePublicContracts<ContractAttribute>()
+                .UseInitializers()
+                .UseConsul()
                 .UseRabbitMq()
                 .SubscribeCommand<CreateCustomer>()
                 .SubscribeEvent<SignedUp>()

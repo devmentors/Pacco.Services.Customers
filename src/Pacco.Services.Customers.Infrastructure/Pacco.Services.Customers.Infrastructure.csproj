@@ -15,6 +15,7 @@
       <PackageReference Include="Convey.MessageBrokers.CQRS" Version="0.0.*" />
       <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.0.*" />
       <PackageReference Include="Convey.Persistence.MongoDB" Version="0.0.*" />
+      <PackageReference Include="Convey.WebApi.CQRS" Version="0.0.*" />
     </ItemGroup>
 
     <ItemGroup>
