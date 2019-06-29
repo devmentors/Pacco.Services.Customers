@@ -3,7 +3,7 @@ using Convey.MessageBrokers.RabbitMQ;
 using Pacco.Services.Customers.Application.Events.Rejected;
 using Pacco.Services.Customers.Core.Exceptions;
 
-namespace Pacco.Services.Customers.Infrastructure
+namespace Pacco.Services.Customers.Infrastructure.Exceptions
 {
     public class ExceptionToMessageMapper : IExceptionToMessageMapper
     {
@@ -11,7 +11,7 @@ namespace Pacco.Services.Customers.Infrastructure
         {
             switch (exception)
             {
-                case CustomerNotFoundException ex: return new CreateCustomerRejected(ex.Id, ex.Code, ex.Message);
+                case CustomerNotFoundException ex: return new CreateCustomerRejected(ex.Id, ex.Message, ex.Code);
             }
 
             return null;

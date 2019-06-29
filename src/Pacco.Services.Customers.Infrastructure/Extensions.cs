@@ -17,6 +17,7 @@ using Pacco.Services.Customers.Application.Events.External;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Repositories;
 using Pacco.Services.Customers.Core.Services;
+using Pacco.Services.Customers.Infrastructure.Exceptions;
 using Pacco.Services.Customers.Infrastructure.Mongo.Documents;
 using Pacco.Services.Customers.Infrastructure.Mongo.Repositories;
 using Pacco.Services.Customers.Infrastructure.Services;
