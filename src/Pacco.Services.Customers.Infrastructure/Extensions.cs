@@ -40,6 +40,7 @@ namespace Pacco.Services.Customers.Infrastructure
                 .AddConsul()
                 .AddFabio()
                 .AddRabbitMq()
+                .AddExceptionToMessageMapper<ExceptionToMessageMapper>()
                 .AddMongo()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers");
         }
