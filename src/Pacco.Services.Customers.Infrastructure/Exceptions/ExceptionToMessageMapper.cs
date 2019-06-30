@@ -7,7 +7,7 @@ namespace Pacco.Services.Customers.Infrastructure.Exceptions
 {
     public class ExceptionToMessageMapper : IExceptionToMessageMapper
     {
-        public object Map(Exception exception)
+        public object Map(Exception exception, object message)
         {
             switch (exception)
             {
