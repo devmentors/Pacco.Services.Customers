@@ -30,7 +30,7 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
             {
                 return;
             }
-
+            
             customer.CompleteRegistration(command.FullName, command.Address);
             await _customerRepository.UpdateAsync(customer);
             await _messageBroker.PublishAsync(new CustomerCreated(command.Id));

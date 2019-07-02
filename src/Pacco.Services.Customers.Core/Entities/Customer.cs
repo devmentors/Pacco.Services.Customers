@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pacco.Services.Customers.Core.Exceptions;
 
 namespace Pacco.Services.Customers.Core.Entities
 {
@@ -41,6 +42,16 @@ namespace Pacco.Services.Customers.Core.Entities
 
         public void CompleteRegistration(string fullName, string address)
         {
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                throw new InvalidCustomerFullNameException(Id, fullName);
+            }
+
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                throw new InvalidCustomerAddressException(Id, address);
+            }
+            
             FullName = fullName;
             Address = address;
             RegistrationCompleted = true;

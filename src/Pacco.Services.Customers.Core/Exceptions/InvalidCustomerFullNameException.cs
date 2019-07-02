@@ -1,0 +1,18 @@
+using System;
+
+namespace Pacco.Services.Customers.Core.Exceptions
+{
+    public class InvalidCustomerFullNameException : ExceptionBase
+    {
+        public override string Code => "invalid_customer_fullname";
+        public Guid Id { get; }
+        public string FullName { get; }
+
+        public InvalidCustomerFullNameException(Guid id, string fullName) : base(
+            $"Customer with id: {id} has invalid full name.")
+        {
+            Id = id;
+            FullName = fullName;
+        }
+    }
+}

@@ -13,9 +13,9 @@ namespace Pacco.Services.Customers.Infrastructure.Services
 
         public IEvent Map(IDomainEvent @event)
         {
-            switch (@event)
-            {
-            }
+//            switch (@event)
+//            {
+//            }
 
             return null;
         }
