@@ -7,18 +7,18 @@ using Pacco.Services.Customers.Core.Repositories;
 
 namespace Pacco.Services.Customers.Application.Commands.Handlers
 {
-    public class CreateCustomerHandler : ICommandHandler<CreateCustomer>
+    public class CompleteCustomerRegistrationHandler : ICommandHandler<CompleteCustomerRegistration>
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IMessageBroker _messageBroker;
 
-        public CreateCustomerHandler(ICustomerRepository customerRepository, IMessageBroker messageBroker)
+        public CompleteCustomerRegistrationHandler(ICustomerRepository customerRepository, IMessageBroker messageBroker)
         {
             _customerRepository = customerRepository;
             _messageBroker = messageBroker;
         }
 
-        public async Task HandleAsync(CreateCustomer command)
+        public async Task HandleAsync(CompleteCustomerRegistration command)
         {
             var customer = await _customerRepository.GetAsync(command.Id);
             if (customer is null)

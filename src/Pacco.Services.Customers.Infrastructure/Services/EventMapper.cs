@@ -3,6 +3,7 @@ using System.Linq;
 using Convey.CQRS.Events;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core;
+using Pacco.Services.Customers.Core.Events;
 
 namespace Pacco.Services.Customers.Infrastructure.Services
 {
@@ -13,9 +14,10 @@ namespace Pacco.Services.Customers.Infrastructure.Services
 
         public IEvent Map(IDomainEvent @event)
         {
-//            switch (@event)
-//            {
-//            }
+            switch (@event)
+            {
+                case CustomerBecameVip e: return new Application.Events.CustomerBecameVip(e.Customer.Id);
+            }
 
             return null;
         }

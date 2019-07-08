@@ -11,7 +11,12 @@ namespace Pacco.Services.Customers.Infrastructure.Exceptions
         {
             switch (exception)
             {
-                case CustomerNotFoundException ex: return new CreateCustomerRejected(ex.Id, ex.Message, ex.Code);
+                case CustomerNotFoundException ex:
+                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
+                case InvalidCustomerFullNameException ex:
+                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
+                case InvalidCustomerAddressException ex:
+                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
             }
 
             return null;

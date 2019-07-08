@@ -26,14 +26,12 @@ namespace Pacco.Services.Customers.Api
                     .AddInfrastructure()
                     .Build())
                 .Configure(app => app
-                    .UseErrorHandler()
-                    .UsePublicContracts(false)
                     .UseInfrastructure()
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync("Welcome to Pacco Customers Service!"))
                         .Get<GetCustomer, CustomerDto>("customers/{id}")
                         .Get<GetCustomers, IEnumerable<CustomerDto>>("customers")
-                        .Post<CreateCustomer>("customers",
+                        .Post<CompleteCustomerRegistration>("customers",
                             afterDispatch: (cmd, ctx) => ctx.Response.Created($"customers/{cmd.Id}"))))
                 .UseLogging()
                 .Build()

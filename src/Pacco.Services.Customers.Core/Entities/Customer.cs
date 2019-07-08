@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pacco.Services.Customers.Core.Events;
 using Pacco.Services.Customers.Core.Exceptions;
 
 namespace Pacco.Services.Customers.Core.Entities
@@ -59,7 +60,13 @@ namespace Pacco.Services.Customers.Core.Entities
 
         public void SetVip()
         {
+            if (IsVip)
+            {
+                return;
+            }
+            
             IsVip = true;
+            AddEvent(new CustomerBecameVip(this));
         }
 
         public void AddCompletedOrder(Guid orderId)

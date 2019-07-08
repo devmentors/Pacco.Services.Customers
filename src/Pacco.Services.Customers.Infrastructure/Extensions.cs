@@ -53,7 +53,7 @@ namespace Pacco.Services.Customers.Infrastructure
                 .UseInitializers()
                 .UseConsul()
                 .UseRabbitMq()
-                .SubscribeCommand<CreateCustomer>()
+                .SubscribeCommand<CompleteCustomerRegistration>()
                 .SubscribeEvent<SignedUp>()
                 .SubscribeEvent<OrderCompleted>();
 
