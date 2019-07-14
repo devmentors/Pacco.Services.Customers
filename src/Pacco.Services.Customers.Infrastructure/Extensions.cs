@@ -57,6 +57,7 @@ namespace Pacco.Services.Customers.Infrastructure
         {
             app.UseErrorHandler()
                 .UseVault()
+                .UseJaeger()
                 .UseInitializers()
                 .UsePublicContracts<ContractAttribute>()
                 .UseConsul()
