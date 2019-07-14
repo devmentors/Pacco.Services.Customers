@@ -1,6 +1,5 @@
 using System;
 using Convey;
-using Convey.Configurations.Vault;
 using Convey.CQRS.Queries;
 using Convey.Discovery.Consul;
 using Convey.HTTP;
@@ -49,14 +48,12 @@ namespace Pacco.Services.Customers.Infrastructure
                 .AddMongo()
                 .AddMetrics()
                 .AddJaeger()
-                .AddVault()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers");
         }
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
             app.UseErrorHandler()
-                .UseVault()
                 .UseJaeger()
                 .UseInitializers()
                 .UsePublicContracts<ContractAttribute>()
