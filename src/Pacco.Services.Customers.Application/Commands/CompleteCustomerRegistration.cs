@@ -6,13 +6,13 @@ namespace Pacco.Services.Customers.Application.Commands
     [Contract]
     public class CompleteCustomerRegistration : ICommand
     {
-        public Guid Id { get; }
+        public Guid CustomerId { get; }
         public string FullName { get; }
         public string Address { get; }
 
-        public CompleteCustomerRegistration(Guid id, string fullName, string address)
+        public CompleteCustomerRegistration(Guid customerId, string fullName, string address)
         {
-            Id = id;
+            CustomerId = customerId;
             FullName = fullName;
             Address = address;
         }

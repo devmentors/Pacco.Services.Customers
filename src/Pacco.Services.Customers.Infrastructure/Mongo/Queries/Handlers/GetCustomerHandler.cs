@@ -19,7 +19,7 @@ namespace Pacco.Services.Customers.Infrastructure.Mongo.Queries.Handlers
 
         public async Task<CustomerDto> HandleAsync(GetCustomer query)
         {
-            var document = await _customerRepository.GetAsync(p => p.Id == query.Id);
+            var document = await _customerRepository.GetAsync(p => p.Id == query.CustomerId);
 
             return document?.AsDto();
         }

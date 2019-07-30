@@ -24,13 +24,13 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
                 return;
             }
             
-            var customer = await _customerRepository.GetAsync(@event.Id);
+            var customer = await _customerRepository.GetAsync(@event.UserId);
             if (!(customer is null))
             {
                 return;
             }
 
-            customer = new Customer(@event.Id, @event.Email, _dateTimeProvider.Now);
+            customer = new Customer(@event.UserId, @event.Email, _dateTimeProvider.Now);
             await _customerRepository.AddAsync(customer);
         }
     }

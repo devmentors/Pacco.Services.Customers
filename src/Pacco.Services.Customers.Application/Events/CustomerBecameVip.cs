@@ -6,11 +6,11 @@ namespace Pacco.Services.Customers.Application.Events
     [Contract]
     public class CustomerBecameVip : IEvent
     {
-        public Guid Id { get; }
+        public Guid CustomerId { get; }
 
-        public CustomerBecameVip(Guid id)
+        public CustomerBecameVip(Guid customerId)
         {
-            Id = id;
+            CustomerId = customerId;
         }
     }
 }

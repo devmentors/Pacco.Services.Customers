@@ -6,6 +6,6 @@ namespace Pacco.Services.Customers.Application.Queries
 {
     public class GetCustomer : IQuery<CustomerDto>
     {
-        public Guid Id { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

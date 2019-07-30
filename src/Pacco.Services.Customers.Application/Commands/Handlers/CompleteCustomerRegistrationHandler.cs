@@ -20,10 +20,10 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
 
         public async Task HandleAsync(CompleteCustomerRegistration command)
         {
-            var customer = await _customerRepository.GetAsync(command.Id);
+            var customer = await _customerRepository.GetAsync(command.CustomerId);
             if (customer is null)
             {
-                throw new CustomerNotFoundException(command.Id);
+                throw new CustomerNotFoundException(command.CustomerId);
             }
 
             if (customer.RegistrationCompleted)
@@ -33,7 +33,7 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
             
             customer.CompleteRegistration(command.FullName, command.Address);
             await _customerRepository.UpdateAsync(customer);
-            await _messageBroker.PublishAsync(new CustomerCreated(command.Id));
+            await _messageBroker.PublishAsync(new CustomerCreated(command.CustomerId));
         }
     }
 }
