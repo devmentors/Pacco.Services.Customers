@@ -20,6 +20,7 @@ using Pacco.Services.Customers.Application.Events.External;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Repositories;
 using Pacco.Services.Customers.Core.Services;
+using Pacco.Services.Customers.Infrastructure.Contexts;
 using Pacco.Services.Customers.Infrastructure.Exceptions;
 using Pacco.Services.Customers.Infrastructure.Mongo.Documents;
 using Pacco.Services.Customers.Infrastructure.Mongo.Repositories;
@@ -36,6 +37,8 @@ namespace Pacco.Services.Customers.Infrastructure
             builder.Services.AddTransient<ICustomerRepository, CustomerMongoRepository>();
             builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddSingleton<IVipPolicy, VipPolicy>();
+            builder.Services.AddTransient<IAppContextFactory, AppContextFactory>();
+            builder.Services.AddTransient(ctx => ctx.GetRequiredService<IAppContextFactory>().Create());
 
             return builder
                 .AddQueryHandlers()
