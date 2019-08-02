@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pacco.Services.Customers.Application
 {
     public interface IIdentityContext
@@ -5,5 +7,6 @@ namespace Pacco.Services.Customers.Application
         string Id { get; }
         string Role { get; }
         bool IsAuthenticated { get; }
+        IDictionary<string, string> Claims { get; }
     }
 }

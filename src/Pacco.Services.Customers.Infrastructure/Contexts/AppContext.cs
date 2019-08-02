@@ -1,24 +1,26 @@
+using System.Collections.Generic;
 using Pacco.Services.Customers.Application;
 
 namespace Pacco.Services.Customers.Infrastructure.Contexts
 {
-    public class AppContext : IAppContext
+    internal class AppContext : IAppContext
     {
         public string RequestId { get; }
         public IIdentityContext Identity { get; }
+        public IDictionary<string, string> Claims { get; }
 
         internal AppContext()
         {
             Identity = new IdentityContext();
         }
 
-        public AppContext(CorrelationContext context)
+        internal AppContext(CorrelationContext context)
         {
             RequestId = context.CorrelationId;
             Identity = new IdentityContext(context.User);
         }
 
-        public AppContext(string requestId, IIdentityContext identity)
+        internal AppContext(string requestId, IIdentityContext identity)
         {
             RequestId = requestId;
             Identity = identity;
