@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using Pacco.Services.Customers.Application;
 
 namespace Pacco.Services.Customers.Infrastructure.Contexts
@@ -7,17 +7,13 @@ namespace Pacco.Services.Customers.Infrastructure.Contexts
     {
         public string RequestId { get; }
         public IIdentityContext Identity { get; }
-        public IDictionary<string, string> Claims { get; }
 
-        internal AppContext()
+        internal AppContext() : this(Guid.NewGuid().ToString("N"), IdentityContext.Empty)
         {
-            Identity = new IdentityContext();
         }
 
-        internal AppContext(CorrelationContext context)
+        internal AppContext(CorrelationContext context) : this(context.CorrelationId, new IdentityContext(context.User))
         {
-            RequestId = context.CorrelationId;
-            Identity = new IdentityContext(context.User);
         }
 
         internal AppContext(string requestId, IIdentityContext identity)
@@ -25,5 +21,7 @@ namespace Pacco.Services.Customers.Infrastructure.Contexts
             RequestId = requestId;
             Identity = identity;
         }
+
+        internal static IAppContext Empty => new AppContext();
     }
 }
