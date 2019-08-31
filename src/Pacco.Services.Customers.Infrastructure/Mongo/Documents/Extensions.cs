@@ -7,7 +7,7 @@ namespace Pacco.Services.Customers.Infrastructure.Mongo.Documents
     {
         public static Customer AsEntity(this CustomerDocument document)
             => new Customer(document.Id, document.Email, document.CreatedAt, document.FullName, document.Address,
-                document.IsVip, document.CompletedOrders, document.RegistrationCompleted);
+                document.IsVip, document.State, document.CompletedOrders);
 
         public static CustomerDocument AsDocument(this Customer entity)
             => new CustomerDocument
@@ -17,7 +17,7 @@ namespace Pacco.Services.Customers.Infrastructure.Mongo.Documents
                 FullName = entity.FullName,
                 Address = entity.Address,
                 IsVip = entity.IsVip,
-                RegistrationCompleted = entity.RegistrationCompleted,
+                State = entity.State,
                 CreatedAt = entity.CreatedAt,
                 CompletedOrders = entity.CompletedOrders
             };
@@ -26,11 +26,19 @@ namespace Pacco.Services.Customers.Infrastructure.Mongo.Documents
             => new CustomerDto
             {
                 Id = document.Id,
+                State = document.State.ToString().ToLowerInvariant(),
+                CreatedAt = document.CreatedAt,
+            };
+
+        public static CustomerDetailsDto AsDetailsDto(this CustomerDocument document)
+            => new CustomerDetailsDto
+            {
+                Id = document.Id,
                 Email = document.Email,
                 FullName = document.FullName,
                 Address = document.Address,
                 IsVip = document.IsVip,
-                RegistrationCompleted = document.RegistrationCompleted,
+                State = document.State.ToString().ToLowerInvariant(),
                 CreatedAt = document.CreatedAt,
                 CompletedOrders = document.CompletedOrders
             };

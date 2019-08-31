@@ -8,7 +8,7 @@ using Pacco.Services.Customers.Infrastructure.Mongo.Documents;
 
 namespace Pacco.Services.Customers.Infrastructure.Mongo.Queries.Handlers
 {
-    public class GetCustomerHandler : IQueryHandler<GetCustomer, CustomerDto>
+    public class GetCustomerHandler : IQueryHandler<GetCustomer, CustomerDetailsDto>
     {
         private readonly IMongoRepository<CustomerDocument, Guid> _customerRepository;
 
@@ -17,11 +17,11 @@ namespace Pacco.Services.Customers.Infrastructure.Mongo.Queries.Handlers
             _customerRepository = customerRepository;
         }
 
-        public async Task<CustomerDto> HandleAsync(GetCustomer query)
+        public async Task<CustomerDetailsDto> HandleAsync(GetCustomer query)
         {
             var document = await _customerRepository.GetAsync(p => p.Id == query.CustomerId);
 
-            return document?.AsDto();
+            return document?.AsDetailsDto();
         }
     }
 }

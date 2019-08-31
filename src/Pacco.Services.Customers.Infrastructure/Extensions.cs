@@ -67,6 +67,7 @@ namespace Pacco.Services.Customers.Infrastructure
                 .UseMetrics()
                 .UseRabbitMq()
                 .SubscribeCommand<CompleteCustomerRegistration>()
+                .SubscribeCommand<ChangeCustomerState>()
                 .SubscribeEvent<SignedUp>()
                 .SubscribeEvent<OrderCompleted>();
 

@@ -33,10 +33,13 @@ namespace Pacco.Services.Customers.Api
                     .UseInfrastructure()
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
-                        .Get<GetCustomer, CustomerDto>("customers/{customerId}")
                         .Get<GetCustomers, IEnumerable<CustomerDto>>("customers")
+                        .Get<GetCustomer, CustomerDetailsDto>("customers/{customerId}")
+                        .Get<GetCustomerState, CustomerStateDto>("customers/{customerId}/state")
                         .Post<CompleteCustomerRegistration>("customers",
-                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"customers/{cmd.CustomerId}"))))
+                            afterDispatch: (cmd, ctx) => ctx.Response.Created($"customers/{cmd.CustomerId}"))
+                        .Put<ChangeCustomerState>("customers/{customerId}/state/{state}",
+                            afterDispatch: (cmd, ctx) => ctx.Response.NoContent())))
                 .UseLogging()
                 .UseVault()
                 .Build()

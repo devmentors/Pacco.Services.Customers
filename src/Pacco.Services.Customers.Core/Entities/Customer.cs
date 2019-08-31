@@ -14,7 +14,7 @@ namespace Pacco.Services.Customers.Core.Entities
         public string FullName { get; private set; }
         public string Address { get; private set; }
         public bool IsVip { get; private set; }
-        public bool RegistrationCompleted { get; private set; }
+        public State State { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
         public IEnumerable<Guid> CompletedOrders
@@ -24,12 +24,12 @@ namespace Pacco.Services.Customers.Core.Entities
         }
 
         public Customer(Guid id, string email, DateTime createdAt) : this(id, email, createdAt, string.Empty,
-            string.Empty, false, Enumerable.Empty<Guid>(),false)
+            string.Empty, false, State.Incomplete, Enumerable.Empty<Guid>())
         {
         }
 
         public Customer(Guid id, string email, DateTime createdAt, string fullName, string address, bool isVip,
-            IEnumerable<Guid> completedOrders = null, bool registrationCompleted = true)
+            State state, IEnumerable<Guid> completedOrders = null)
         {
             Id = id;
             Email = email;
@@ -38,7 +38,7 @@ namespace Pacco.Services.Customers.Core.Entities
             Address = address;
             IsVip = isVip;
             CompletedOrders = completedOrders ?? Enumerable.Empty<Guid>();
-            RegistrationCompleted = registrationCompleted;
+            State = state;
         }
 
         public void CompleteRegistration(string fullName, string address)
@@ -52,10 +52,31 @@ namespace Pacco.Services.Customers.Core.Entities
             {
                 throw new InvalidCustomerAddressException(Id, address);
             }
-            
+
+            if (State != State.Incomplete)
+            {
+                throw new CannotChangeCustomerStateException(Id, State);
+            }
+
             FullName = fullName;
             Address = address;
-            RegistrationCompleted = true;
+            State = State.Valid;
+            AddEvent(new CustomerRegistrationCompleted(this));
+        }
+
+        public void SetValid() => SetState(State.Valid);
+        
+        public void SetIncomplete() => SetState(State.Incomplete);
+
+        public void Lock() => SetState(State.Locked);
+
+        public void MarkAsSuspicious() => SetState(State.Suspicious);
+
+        private void SetState(State state)
+        {
+            var previousState = State;
+            State = state;
+            AddEvent(new CustomerStateChanged(this, previousState));
         }
 
         public void SetVip()
@@ -64,7 +85,7 @@ namespace Pacco.Services.Customers.Core.Entities
             {
                 return;
             }
-            
+
             IsVip = true;
             AddEvent(new CustomerBecameVip(this));
         }

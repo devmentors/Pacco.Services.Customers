@@ -1,5 +1,6 @@
 using System;
 using Convey.MessageBrokers.RabbitMQ;
+using Pacco.Services.Customers.Application.Commands;
 using Pacco.Services.Customers.Application.Events.Rejected;
 using Pacco.Services.Customers.Core.Exceptions;
 
@@ -11,6 +12,19 @@ namespace Pacco.Services.Customers.Infrastructure.Exceptions
         {
             switch (exception)
             {
+                case CannotChangeCustomerStateException ex:
+                {
+                    switch (message)
+                    {
+                        case ChangeCustomerState _:
+                            return new ChangeCustomerStateRejected(ex.Id, ex.State.ToString().ToLowerInvariant(),
+                                ex.Message, ex.Code);
+                        case CompleteCustomerRegistration _:
+                            return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
+                    }
+                }
+                    break;
+
                 case CustomerNotFoundException ex:
                     return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
                 case InvalidCustomerFullNameException ex:

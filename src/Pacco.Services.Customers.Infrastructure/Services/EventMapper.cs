@@ -16,7 +16,11 @@ namespace Pacco.Services.Customers.Infrastructure.Services
         {
             switch (@event)
             {
+                case CustomerRegistrationCompleted e: return new Application.Events.CustomerCreated(e.Customer.Id);
                 case CustomerBecameVip e: return new Application.Events.CustomerBecameVip(e.Customer.Id);
+                case CustomerStateChanged e:
+                    return new Application.Events.CustomerStateChanged(e.Customer.Id,
+                        e.Customer.State.ToString().ToLowerInvariant(), e.PreviousState.ToString().ToLowerInvariant());
             }
 
             return null;
