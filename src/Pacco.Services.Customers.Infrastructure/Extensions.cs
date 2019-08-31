@@ -25,6 +25,7 @@ using Pacco.Services.Customers.Core.Repositories;
 using Pacco.Services.Customers.Core.Services;
 using Pacco.Services.Customers.Infrastructure.Contexts;
 using Pacco.Services.Customers.Infrastructure.Exceptions;
+using Pacco.Services.Customers.Infrastructure.Logging;
 using Pacco.Services.Customers.Infrastructure.Mongo.Documents;
 using Pacco.Services.Customers.Infrastructure.Mongo.Repositories;
 using Pacco.Services.Customers.Infrastructure.Services;
@@ -54,6 +55,7 @@ namespace Pacco.Services.Customers.Infrastructure
                 .AddMongo()
                 .AddMetrics()
                 .AddJaeger()
+                .AddHandlersLogging()
                 .AddMongoRepository<CustomerDocument, Guid>("Customers");
         }
 

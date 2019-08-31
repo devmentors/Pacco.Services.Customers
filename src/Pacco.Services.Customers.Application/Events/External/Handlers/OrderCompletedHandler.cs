@@ -15,16 +15,14 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
         private readonly IVipPolicy _vipPolicy;
         private readonly IEventMapper _eventMapper;
         private readonly IMessageBroker _messageBroker;
-        private readonly ILogger<OrderCompletedHandler> _logger;
 
         public OrderCompletedHandler(ICustomerRepository customerRepository, IVipPolicy vipPolicy,
-            IEventMapper eventMapper, IMessageBroker messageBroker, ILogger<OrderCompletedHandler> logger)
+            IEventMapper eventMapper, IMessageBroker messageBroker)
         {
             _customerRepository = customerRepository;
             _vipPolicy = vipPolicy;
             _eventMapper = eventMapper;
             _messageBroker = messageBroker;
-            _logger = logger;
         }
 
         public async Task HandleAsync(OrderCompleted @event)
@@ -42,8 +40,6 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
             await _customerRepository.UpdateAsync(customer);
             var events = _eventMapper.MapAll(customer.Events);
             await _messageBroker.PublishAsync(events.ToArray());
-            _logger.LogInformation($"Order with id: {@event.OrderId} for the customer with id: {@event.CustomerId} " +
-                                   $"has been completed.{(vipApplied ? " VIP account has been granted." : string.Empty)}");
         }
     }
 }
