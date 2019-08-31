@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Convey.CQRS.Events;
 using Microsoft.Extensions.Logging;
+using Pacco.Services.Customers.Application.Exceptions;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Entities;
 using Pacco.Services.Customers.Core.Repositories;
@@ -26,21 +27,17 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
         {
             if (@event.Role != RequiredRole)
             {
-                _logger.LogWarning($"Customer account will not be created for the user with id: {@event.UserId} " +
-                                   $"due to the invalid role: {@event.Role} (required: {RequiredRole}).");
-                return;
+                throw new InvalidRoleException(@event.Role, RequiredRole);
             }
 
             var customer = await _customerRepository.GetAsync(@event.UserId);
             if (!(customer is null))
             {
-                _logger.LogWarning($"Customer with id: {@event.UserId} was already created.");
-                return;
+                throw new CustomerAlreadyCreatedException(customer.Id);
             }
 
             customer = new Customer(@event.UserId, @event.Email, _dateTimeProvider.Now);
             await _customerRepository.AddAsync(customer);
-            _logger.LogInformation($"Created a new customer with id: {@event.UserId}.");
         }
     }
 }
