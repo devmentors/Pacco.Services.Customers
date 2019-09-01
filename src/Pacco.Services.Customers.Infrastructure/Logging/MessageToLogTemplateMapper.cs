@@ -8,27 +8,31 @@ namespace Pacco.Services.Customers.Infrastructure.Logging
 {
     public class MessageToLogTemplateMapper : IMessageToLogTemplateMapper
     {
-        private static IReadOnlyDictionary<Type, HandlerLogTemplate> MessageTemplates 
+        private static IReadOnlyDictionary<Type, HandlerLogTemplate> MessageTemplates
             => new Dictionary<Type, HandlerLogTemplate>
             {
                 {
-                    typeof(CompleteCustomerRegistration),     
+                    typeof(CompleteCustomerRegistration),
                     new HandlerLogTemplate {After = "Completed a registration for the customer with id: {CustomerId}."}
                 },
                 {
-                    typeof(OrderCompleted),  new HandlerLogTemplate 
-                    { 
+                    typeof(ChangeCustomerState),
+                    new HandlerLogTemplate {After = "Changed a customer with id: {CustomerId} state to: {State}."}
+                },
+                {
+                    typeof(OrderCompleted), new HandlerLogTemplate
+                    {
                         After = "Order with id: {OrderId} for the customer with id: {CustomerId} has been completed."
                     }
                 },
                 {
-                    typeof(SignedUp),  new HandlerLogTemplate 
-                    { 
+                    typeof(SignedUp), new HandlerLogTemplate
+                    {
                         After = "Created a new customer with id: {UserId}."
                     }
-                },
+                }
             };
-        
+
         public HandlerLogTemplate Map<TMessage>(TMessage message) where TMessage : class
         {
             var key = message.GetType();

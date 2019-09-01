@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Convey.CQRS.Events;
-using Microsoft.Extensions.Logging;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Exceptions;
 using Pacco.Services.Customers.Core.Repositories;

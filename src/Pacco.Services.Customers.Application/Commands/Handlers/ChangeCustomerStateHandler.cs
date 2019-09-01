@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Convey.CQRS.Commands;
-using Microsoft.Extensions.Logging;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Entities;
 using Pacco.Services.Customers.Core.Exceptions;
@@ -15,15 +14,13 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
         private readonly ICustomerRepository _customerRepository;
         private readonly IEventMapper _eventMapper;
         private readonly IMessageBroker _messageBroker;
-        private readonly ILogger<ChangeCustomerStateHandler> _logger;
 
         public ChangeCustomerStateHandler(ICustomerRepository customerRepository, IEventMapper eventMapper,
-            IMessageBroker messageBroker, ILogger<ChangeCustomerStateHandler> logger)
+            IMessageBroker messageBroker)
         {
             _customerRepository = customerRepository;
             _eventMapper = eventMapper;
             _messageBroker = messageBroker;
-            _logger = logger;
         }
 
         public async Task HandleAsync(ChangeCustomerState command)
@@ -65,7 +62,6 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
             await _customerRepository.UpdateAsync(customer);
             var events = _eventMapper.MapAll(customer.Events);
             await _messageBroker.PublishAsync(events.ToArray());
-            _logger.LogInformation($"Changed customer: {command.CustomerId} state to: {state}.");
         }
     }
 }
