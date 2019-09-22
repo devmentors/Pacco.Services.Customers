@@ -27,7 +27,7 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
         {
             if (@event.Role != RequiredRole)
             {
-                throw new InvalidRoleException(@event.Role, RequiredRole);
+                throw new InvalidRoleException(@event.UserId, @event.Role, RequiredRole);
             }
 
             var customer = await _customerRepository.GetAsync(@event.UserId);
