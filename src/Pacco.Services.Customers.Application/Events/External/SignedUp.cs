@@ -4,7 +4,7 @@ using Convey.MessageBrokers;
 
 namespace Pacco.Services.Customers.Application.Events.External
 {
-    [MessageNamespace("identity")]
+    [Message("identity")]
     public class SignedUp : IEvent
     {
         public Guid UserId { get; }
