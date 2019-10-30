@@ -1,4 +1,5 @@
 using System;
+using Convey.CQRS.Events;
 using Convey.MessageBrokers.RabbitMQ;
 using Pacco.Services.Customers.Application.Commands;
 using Pacco.Services.Customers.Application.Events.Rejected;
@@ -9,31 +10,19 @@ namespace Pacco.Services.Customers.Infrastructure.Exceptions
     public class ExceptionToMessageMapper : IExceptionToMessageMapper
     {
         public object Map(Exception exception, object message)
-        {
-            switch (exception)
+            => exception switch
             {
-                case CannotChangeCustomerStateException ex:
+                CannotChangeCustomerStateException ex => message switch
                 {
-                    switch (message)
-                    {
-                        case ChangeCustomerState _:
-                            return new ChangeCustomerStateRejected(ex.Id, ex.State.ToString().ToLowerInvariant(),
-                                ex.Message, ex.Code);
-                        case CompleteCustomerRegistration _:
-                            return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
-                    }
-                }
-                    break;
+                    ChangeCustomerState _ => (IRejectedEvent) new ChangeCustomerStateRejected(ex.Id, ex.State.ToString().ToLowerInvariant(), ex.Message, ex.Code),
+                    CompleteCustomerRegistration _ => new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code),
+                    _ => null
+                },
+                CustomerNotFoundException ex => new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code),
+                InvalidCustomerFullNameException ex => new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code),
+                InvalidCustomerAddressException ex => new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code),
+                _ => null
 
-                case CustomerNotFoundException ex:
-                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
-                case InvalidCustomerFullNameException ex:
-                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
-                case InvalidCustomerAddressException ex:
-                    return new CompleteCustomerRegistrationRejected(ex.Id, ex.Message, ex.Code);
-            }
-
-            return null;
-        }
+            };
     }
 }
