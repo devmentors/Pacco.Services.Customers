@@ -31,7 +31,7 @@ namespace Pacco.Services.Customers.Application.Events.External.Handlers
             }
 
             var customer = await _customerRepository.GetAsync(@event.UserId);
-            if (!(customer is null))
+            if (customer is {})
             {
                 throw new CustomerAlreadyCreatedException(customer.Id);
             }
