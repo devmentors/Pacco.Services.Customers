@@ -1,9 +1,8 @@
 using System;
-using Pacco.Services.Customers.Core.Exceptions;
 
 namespace Pacco.Services.Customers.Application.Exceptions
 {
-    public class InvalidRoleException : ExceptionBase
+    public class InvalidRoleException : AppException
     {
         public override string Code => "invalid_role";
 

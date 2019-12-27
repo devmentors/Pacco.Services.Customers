@@ -3,7 +3,7 @@ using Pacco.Services.Customers.Core.Entities;
 
 namespace Pacco.Services.Customers.Core.Exceptions
 {
-    public class CannotChangeCustomerStateException : ExceptionBase
+    public class CannotChangeCustomerStateException : DomainException
     {
         public override string Code => "cannot_change_customer_state";
         public Guid Id { get; }

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Convey.CQRS.Commands;
+using Pacco.Services.Customers.Application.Exceptions;
 using Pacco.Services.Customers.Application.Services;
 using Pacco.Services.Customers.Core.Entities;
 using Pacco.Services.Customers.Core.Exceptions;
@@ -29,10 +30,10 @@ namespace Pacco.Services.Customers.Application.Commands.Handlers
             {
                 throw new CustomerNotFoundException(command.CustomerId);
             }
-
+            
             if (customer.State is State.Valid)
             {
-                throw new CannotChangeCustomerStateException(command.CustomerId, State.Valid);
+                throw new CustomerAlreadyRegisteredException(command.CustomerId);
             }
 
             customer.CompleteRegistration(command.FullName, command.Address);

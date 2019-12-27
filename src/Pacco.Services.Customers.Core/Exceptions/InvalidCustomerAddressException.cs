@@ -2,7 +2,7 @@ using System;
 
 namespace Pacco.Services.Customers.Core.Exceptions
 {
-    public class InvalidCustomerAddressException : ExceptionBase
+    public class InvalidCustomerAddressException : DomainException
     {
         public override string Code => "invalid_customer_address";
         public Guid Id { get; }

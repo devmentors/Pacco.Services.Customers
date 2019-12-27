@@ -2,7 +2,7 @@ using System;
 
 namespace Pacco.Services.Customers.Core.Exceptions
 {
-    public class CustomerNotFoundException : ExceptionBase
+    public class CustomerNotFoundException : DomainException
     {
         public override string Code => "customer_not_found";
         public Guid Id { get; }
