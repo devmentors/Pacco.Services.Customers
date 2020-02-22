@@ -22,6 +22,7 @@ using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
+using Convey.WebApi.Security;
 using Convey.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -73,7 +74,8 @@ namespace Pacco.Services.Customers.Infrastructure
                 .AddJaeger()
                 .AddHandlersLogging()
                 .AddMongoRepository<CustomerDocument, Guid>("customers")
-                .AddWebApiSwaggerDocs();
+                .AddWebApiSwaggerDocs()
+                .AddCertificateAuthentication();
         }
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
@@ -84,6 +86,7 @@ namespace Pacco.Services.Customers.Infrastructure
                 .UseConvey()
                 .UsePublicContracts<ContractAttribute>()
                 .UseMetrics()
+                .UseCertificateAuthentication()
                 .UseRabbitMq()
                 .SubscribeCommand<CompleteCustomerRegistration>()
                 .SubscribeCommand<ChangeCustomerState>()
