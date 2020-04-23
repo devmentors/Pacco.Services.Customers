@@ -4,7 +4,7 @@ namespace Pacco.Services.Customers.Application.Exceptions
 {
     public class CustomerAlreadyRegisteredException : AppException
     {
-        public override string Code => "customer_already_registered";
+        public override string Code { get; } = "customer_already_registered";
         public Guid Id { get; }
         
         public CustomerAlreadyRegisteredException(Guid id) 

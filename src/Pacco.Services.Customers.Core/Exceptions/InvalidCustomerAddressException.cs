@@ -4,7 +4,7 @@ namespace Pacco.Services.Customers.Core.Exceptions
 {
     public class InvalidCustomerAddressException : DomainException
     {
-        public override string Code => "invalid_customer_address";
+        public override string Code { get; } = "invalid_customer_address";
         public Guid Id { get; }
         public string Address { get; }
 

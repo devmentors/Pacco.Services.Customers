@@ -5,7 +5,7 @@ namespace Pacco.Services.Customers.Core.Exceptions
 {
     public class CannotChangeCustomerStateException : DomainException
     {
-        public override string Code => "cannot_change_customer_state";
+        public override string Code { get; } = "cannot_change_customer_state";
         public Guid Id { get; }
         public State State { get; }
 

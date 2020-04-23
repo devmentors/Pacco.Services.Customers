@@ -4,7 +4,7 @@ namespace Pacco.Services.Customers.Application.Exceptions
 {
     public class CustomerAlreadyCreatedException: AppException
     {
-        public override string Code => "customer_already_created";
+        public override string Code { get; } = "customer_already_created";
         public Guid CustomerId { get; }
 
         public CustomerAlreadyCreatedException(Guid customerId)
